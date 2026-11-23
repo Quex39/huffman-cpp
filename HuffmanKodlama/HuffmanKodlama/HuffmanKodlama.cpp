@@ -46,6 +46,49 @@ std::string metniSikistir(const std::string& metin, const std::unordered_map<cha
 }
 
 
+std::string metniCoz(HuffmanNode* kok, const std::string& sikistirilmis) {
+	if (kok == nullptr || sikistirilmis.empty()) {
+		return "";
+	}
+
+	std::string cozulmus;
+	HuffmanNode* mevcut = kok;
+
+
+	if (kok->left == nullptr && kok->right == nullptr) {
+		for (size_t i = 0; i < sikistirilmis.size(); ++i) {
+			cozulmus += kok->ch;
+		}
+		return cozulmus;
+	}
+
+	for (char bit : sikistirilmis) {
+		if (bit == '0') {
+			mevcut = mevcut->left;
+		}
+		else if (bit == '1') {
+			mevcut = mevcut->right;
+		}
+
+		if (mevcut->left == nullptr && mevcut->right == nullptr) {
+			cozulmus += mevcut->ch;
+			mevcut = kok;
+		}
+	}
+	return cozulmus;
+}
+
+
+void agaciTemizle(HuffmanNode* dugum) {
+	if (dugum == nullptr) {
+		return;
+	}
+
+	agaciTemizle(dugum->left);
+	agaciTemizle(dugum->right);
+	delete dugum;
+}
+
 int main() {
 
 	std::string metin = "merhaba";
@@ -83,10 +126,10 @@ int main() {
 	kodlariUret(kok, "", kodTablosu);
 
 	std::string sikistirilmis = metniSikistir(metin, kodTablosu);
+	std::string cozulmus = metniCoz(kok, sikistirilmis);
 
 	std::cout << "Orjinal metin: " << metin << std::endl;
 	std::cout << "Sikistirilmis bit dizisi: " << sikistirilmis << std::endl;
-	std::cout << "Klasik 8-bit/karakter boyutu: " << metin.size() * 8 << " bit" << std::endl;
 	std::cout << "Huffman bit uzunlugu: " << sikistirilmis.size() << " bit" << std::endl;
 
 
