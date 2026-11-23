@@ -108,6 +108,19 @@ void agaciTemizle(HuffmanNode* dugum) {
 	delete dugum;
 }
 
+
+void dosyayaMetinYaz(const std::string& ciktiDosyaAdi, const std::string& icerik) {
+	std::ofstream cikis(ciktiDosyaAdi);
+	if (!cikis.is_open()) {
+		std::cerr << "Hata: '" << ciktiDosyaAdi << "' dosyasi yazmak icin acilamadi!" << std::endl;
+		return;
+	}
+
+	cikis << icerik;
+	cikis.close();
+}
+
+
 int main() {
 	std::string dosyaAdi = "girdi.txt";
 	std::string metin = dosyadanMetinOku(dosyaAdi);
@@ -151,6 +164,10 @@ int main() {
 
 	std::string sikistirilmis = metniSikistir(metin, kodTablosu);
 	std::string cozulmus = metniCoz(kok, sikistirilmis);
+
+	std::string ciktiDosyaAdi = "sikistirilmis_bitler.txt";
+	dosyayaMetinYaz(ciktiDosyaAdi, sikistirilmis);
+	std::cout << "Sikistirilmis veri '" << ciktiDosyaAdi << "' dosyasina yazildi." << std::endl;
 
 	std::cout << "Orjinal metin: " << metin << std::endl;
 	std::cout << "Sikistirilmis bit dizisi: " << sikistirilmis << std::endl;
