@@ -36,6 +36,15 @@ void kodlariUret(HuffmanNode* dugum, const std::string& mevcutKod, std::unordere
 }
 
 
+std::string metniSikistir(const std::string& metin, const std::unordered_map<char, std::string>& kodTablosu) {
+	std::string sikistirilmis;
+
+	for (char c : metin) {
+		sikistirilmis += kodTablosu.at(c);
+	}
+	return sikistirilmis;
+}
+
 
 int main() {
 
@@ -73,10 +82,13 @@ int main() {
 	std::unordered_map<char, std::string> kodTablosu;
 	kodlariUret(kok, "", kodTablosu);
 
-	std::cout << "Karakter Kodlari: " << std::endl;
-	for (const auto& cift : kodTablosu) {
-		std::cout << "  '" << cift.first << "' -> " << cift.second << std::endl;
-	}
+	std::string sikistirilmis = metniSikistir(metin, kodTablosu);
+
+	std::cout << "Orjinal metin: " << metin << std::endl;
+	std::cout << "Sikistirilmis bit dizisi: " << sikistirilmis << std::endl;
+	std::cout << "Klasik 8-bit/karakter boyutu: " << metin.size() * 8 << " bit" << std::endl;
+	std::cout << "Huffman bit uzunlugu: " << sikistirilmis.size() << " bit" << std::endl;
+
 
 	return 0;
 }
