@@ -41,10 +41,28 @@ int main() {
 		kuyruk.push(yeniDugum);
 	}
 
+	while (kuyruk.size() > 1) {
+		HuffmanNode* sol = kuyruk.top();
+		kuyruk.pop();
 
-	if (!kuyruk.empty()) {
-		HuffmanNode* enKucuk = kuyruk.top();
-		std::cout << "En kucuk frekansli dugum -> Karakter: '" << enKucuk->ch << "', Frekans: " << enKucuk->freq << std::endl;
+		HuffmanNode* sag = kuyruk.top();
+		kuyruk.pop();
+
+		HuffmanNode* ebeveyn = new HuffmanNode('\0', sol->freq + sag->freq);
+		ebeveyn->left = sol;
+		ebeveyn->right = sag;
+
+		kuyruk.push(ebeveyn);
+	}
+
+	HuffmanNode* kok = kuyruk.empty() ? nullptr : kuyruk.top();
+
+	if (kok != nullptr) {
+		std::cout << "Agac kuruldu! Kok dugum toplam frekansi: " << kok->freq << std::endl;
+		std::cout << "Metin uzunlugu: " << metin.size() << std::endl;
+	}
+	{
+
 	}
 
 
