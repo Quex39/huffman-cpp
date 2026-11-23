@@ -1,5 +1,7 @@
-﻿#include <iostream>
+﻿#include <fstream>
+#include <iostream>
 #include <queue>
+#include <sstream>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -19,6 +21,19 @@ struct KucukFrekansOnce {
 		return a->freq > b->freq;
 	}
 };
+
+
+std::string dosyadanMetinOku(const std::string& dosyaAdi) {
+	std::ifstream dosya(dosyaAdi);
+	if (!dosya.is_open()) {
+		std::cerr << "Hata: '" << dosyaAdi << "' dosyasi acilamadi!" << std::endl;
+		return "";
+	}
+
+	std::ostringstream tampon;
+	tampon << dosya.rdbuf();
+	return tampon.str();
+}
 
 
 void kodlariUret(HuffmanNode* dugum, const std::string& mevcutKod, std::unordered_map<char, std::string>& kodTablosu) {
@@ -69,6 +84,10 @@ std::string metniCoz(HuffmanNode* kok, const std::string& sikistirilmis) {
 		else if (bit == '1') {
 			mevcut = mevcut->right;
 		}
+		if (mevcut == nullptr) {
+			mevcut = kok;
+			continue;
+		}
 
 		if (mevcut->left == nullptr && mevcut->right == nullptr) {
 			cozulmus += mevcut->ch;
@@ -90,10 +109,15 @@ void agaciTemizle(HuffmanNode* dugum) {
 }
 
 int main() {
+	std::string dosyaAdi = "girdi.txt";
+	std::string metin = dosyadanMetinOku(dosyaAdi);
 
-	std::string metin = "merhaba";
+	if (metin.empty()) {
+		std::cout << "Okunacak metin bulunamadi veya dosya bos." << std::endl;
+		return 1;
+	}
+
 	std::unordered_map<char, size_t> frekanslar;
-
 	for (char c : metin) {
 		frekanslar[c]++;
 	}
@@ -132,6 +156,6 @@ int main() {
 	std::cout << "Sikistirilmis bit dizisi: " << sikistirilmis << std::endl;
 	std::cout << "Huffman bit uzunlugu: " << sikistirilmis.size() << " bit" << std::endl;
 
-
+	std::cout << "Cozulen metin: " << cozulmus << std::endl;
 	return 0;
 }

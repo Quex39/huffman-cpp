@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="HuffmanKodlama/HuffmanKodlama.vcxproj" />
+  <Project Path="HuffmanKodlama/HuffmanKodlama.vcxproj" Id="458a88db-5a7f-4a94-bb9f-b9c1b87321e8" />
 </Solution>
