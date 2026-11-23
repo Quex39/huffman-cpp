@@ -1,5 +1,6 @@
 ﻿#include <iostream>
 #include <string>
+#include <unordered_map>
 
 struct HuffmanNode {
 	char ch;
@@ -12,9 +13,19 @@ struct HuffmanNode {
 };
 
 int main() {
-	HuffmanNode dugum('a', 3);
 
-	std::cout << "Karakter: " << dugum.ch << ", Frekans: " << dugum.freq << std::endl;
+	std::string metin = "SELAM KIZLAR SIKIM SIZLAR";
+	std::unordered_map<char, size_t> frekanslar;
+
+	for (char c : metin) {
+		frekanslar[c]++;
+	}
+
+	for (const auto& cift : frekanslar) {
+		std::cout << cift.first << " -> " << cift.second << std::endl;
+	}
+
+
 
 	return 0;
 }
