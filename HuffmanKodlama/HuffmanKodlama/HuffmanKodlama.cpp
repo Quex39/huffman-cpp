@@ -21,6 +21,19 @@ struct KucukFrekansOnce {
 };
 
 
+void kodlariUret(HuffmanNode* dugum, const std::string& mevcutKod, std::unordered_map<char, std::string>& kodTablosu) {
+	if (dugum == nullptr) {
+		return;
+	}
+
+	if (dugum->left == nullptr && dugum->right == nullptr) {
+		kodTablosu[dugum->ch] = mevcutKod.empty() ? "0" : mevcutKod;
+		return;
+	}
+
+	kodlariUret(dugum->left, mevcutKod + "0", kodTablosu);
+	kodlariUret(dugum->right, mevcutKod + "1", kodTablosu);
+}
 
 
 
@@ -57,14 +70,13 @@ int main() {
 
 	HuffmanNode* kok = kuyruk.empty() ? nullptr : kuyruk.top();
 
-	if (kok != nullptr) {
-		std::cout << "Agac kuruldu! Kok dugum toplam frekansi: " << kok->freq << std::endl;
-		std::cout << "Metin uzunlugu: " << metin.size() << std::endl;
-	}
-	{
+	std::unordered_map<char, std::string> kodTablosu;
+	kodlariUret(kok, "", kodTablosu);
 
+	std::cout << "Karakter Kodlari: " << std::endl;
+	for (const auto& cift : kodTablosu) {
+		std::cout << "  '" << cift.first << "' -> " << cift.second << std::endl;
 	}
-
 
 	return 0;
 }
