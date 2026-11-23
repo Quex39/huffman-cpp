@@ -1,0 +1,9 @@
+.vs/
+*.ipch
+*.db
+*.db-shm
+*.db-wal
+x64/
+x86/
+Debug/
+Release/
